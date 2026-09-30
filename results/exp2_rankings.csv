@@ -1,0 +1,14 @@
+model,euclidean_rank,frobenius_rank,qlike_rank
+HAR-DRD,5,7,6
+"GHAR(E,E)",6,8,5
+"GHAR(E,K)",10,10,2
+"GHAR(E,L)",9,9,9
+"GHAR(K,E)",11,11,12
+"GHAR(K,K)",12,12,11
+"GHAR(K,L)",13,13,13
+"GHAR(S,E)",4,1,7
+"GHAR(S,K)",7,3,3
+"GHAR(S,L)",8,4,10
+"GHAR(GL,E)",1,2,4
+"GHAR(GL,K)",3,6,1
+"GHAR(GL,L)",2,5,8

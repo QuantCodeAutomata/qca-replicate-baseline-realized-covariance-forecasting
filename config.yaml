@@ -1,0 +1,80 @@
+# Experiment Configuration
+# Captures all operational choices for reproducibility
+
+universe:
+  tickers:
+    Information Technology: [AAPL, MSFT, INTC, CSCO, CRM, IBM]
+    Communication Services: [DIS, VZ]
+    Consumer Discretionary: [HD, MCD, NKE]
+    Consumer Staples: [PG, KO, WMT]
+    Health Care: [JNJ, UNH, MRK, AMGN]
+    Financials: [JPM, AXP, GS, TRV]
+    Industrials: [BA, HON, MMM, CAT]
+    Energy: [CVX]
+  n_assets: 27
+  sp500_proxy: SPY
+
+sample:
+  start: "2007-07-01"
+  end: "2021-07-01"
+  oos_start: "2011-07-01"
+  in_sample_end: "2011-06-30"
+
+intraday:
+  bar_minutes: 5
+  session_minutes: 390
+  bars_per_day: 78  # M = 78 non-overlapping 5-min bars
+  synchronization: previous_tick
+  subsampling: true
+  subsampling_offsets: [0, 1, 2, 3, 4]  # 5 subsamples at 1-min offsets
+
+realized_cov:
+  pd_correction: higham  # nearest positive-definite via Higham algorithm
+  pd_log: true           # log PD corrections
+
+har:
+  daily_lag: 1
+  weekly_lags: [2, 3, 4, 5]    # lag 2 to 5, average over 4 lags
+  monthly_lags: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]  # lag 6 to 22, average over 17 lags
+  weekly_weight: 0.25    # 1/4
+  monthly_weight: 0.058823529  # 1/17
+
+rolling:
+  window: 1000
+  update_frequency: monthly  # main baseline
+  update_frequencies_robustness: [daily, weekly, monthly]
+
+horizons:
+  - name: "1d"
+    b: 1
+    days_ahead: 1
+  - name: "1w"
+    b: 4
+    days_ahead: 5
+  - name: "1m"
+    b: 21
+    days_ahead: 22
+
+graphs:
+  vol_graphs: [empty, complete, sector, graphical_lasso]
+  corr_graphs: [empty, complete, line]
+  gl_cv_folds: 5
+  gl_nonzero_tol: 1.0e-10
+
+mcs:
+  bootstrap_replications: 10000
+  block_length: 2
+  significance: 0.05
+
+portfolio:
+  annualization: 252
+  no_transaction_costs: true
+
+robustness:
+  regime_turbulent_pct: 0.10  # top 10% SPY RV days
+  fisher_clip_eps: 1.0e-6
+  log_var_eps: 1.0e-10
+
+transforms:
+  log_variance: true
+  fisher_correlation: true
